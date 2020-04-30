@@ -1,0 +1,27 @@
+{
+  "name": "backstage-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonDiabol/backstage-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnthonDiabol/backstage-api/issues"
+  },
+  "homepage": "https://github.com/AnthonDiabol/backstage-api#readme",
+  "dependencies": {
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "got": "^11.0.1",
+    "js-yaml": "^3.13.1",
+    "request": "^2.88.2"
+  }
+}
