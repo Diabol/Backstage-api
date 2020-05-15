@@ -25,43 +25,47 @@ app.get("/projects",function(req,res){
     })
 });
 
+app.get("/users",function(req,res){
+  const options = {username:config.get('credentials.username'),password:config.get('credentials.password')}
+  const url = baseUrl+'user/search?username=\'\'';
+  
+  got(url,options)
+  .then(response => {
+      console.log(response.body);
+      res.send(response.body);
+  })
+  .catch(error => {
+    console.log(error);
+    res.send(error);
+  })
+});
+
+app.get("/statuses",function(req,res){
+  const options = {username:config.get('credentials.username'),password:config.get('credentials.password')}
+  const url = baseUrl+'status';
+  
+  got(url,options)
+  .then(response => {
+      console.log(response.body);
+      res.send(response.body);
+  })
+  .catch(error => {
+    console.log(error);
+    res.send(error);
+  })
+});
+
 app.get("/issues/:project?",function(req,res){
   const project = req.params.project;
   const url = baseUrl+`search`;
 
-
+  const name = req.query.name && req.query.name!=='' ? ` AND assignee=\"${req.query.name}\" ` : '';
+  const status = req.query.status && req.query.status!=='' ? ` AND status=\"${req.query.status}\" ` : '';
 
   const postData = JSON.stringify({
-    jql:`project=${project}`,
+    jql:`project=${project}${name}${status}`,
     maxResults: req.query.size ? req.query.size : 20,
     startAt: req.query.index ? req.query.index : 0,
-    ...(req.query.fields && {fields: String(req.query.fields).split(",")})
-  });
-
-  const options = {
-    username:config.get('credentials.username'),
-    password:config.get('credentials.password'),
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body:postData
-    };
-
-  got.post(url, options)
-  .then(response => {
-    console.log(response.body);
-    res.send(response.body);
-  })
-  .catch( error => {console.log(error);res.send(error)});
-  
-});
-
-app.get("/issue/:issue?",function(req,res){
-  const issue = req.params.issue;
-  const url = baseUrl+`search`;
-
-  const postData = JSON.stringify({
-    jql:`issue=${issue}`,
     ...(req.query.fields && {fields: String(req.query.fields).split(",")})
   });
 
