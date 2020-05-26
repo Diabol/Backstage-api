@@ -1,0 +1,13 @@
+version: '2'
+services:
+  node:
+    build: .
+    command: node app.js
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3001:3001"
+    environment:
+      USERNAME: username
+      PASSWORD: password

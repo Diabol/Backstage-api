@@ -4,6 +4,11 @@ var cors = require('cors');
 var got = require('got');
 const config = require('config');
 const baseUrl = 'https://jira.nau.dev/rest/api/latest/';
+
+const username = process.env.USERNAME || "";
+const password = process.env.PASSWORD || "";
+const port = 3001;
+
 app.use(cors());
 
 app.get('/', function (req, res) {
@@ -11,7 +16,7 @@ app.get('/', function (req, res) {
 });
 
 app.get("/projects",function(req,res){
-    const options = {username:config.get('credentials.username'),password:config.get('credentials.password')}
+    const options = {username:username,password:password}
     const url = baseUrl+'project?expand=description,lead,url,projectKeys';
     
     got(url,options)
@@ -26,7 +31,7 @@ app.get("/projects",function(req,res){
 });
 
 app.get("/users",function(req,res){
-  const options = {username:config.get('credentials.username'),password:config.get('credentials.password')}
+  const options = {username:username,password:password}
   const url = baseUrl+'user/search?username=\'\'';
   
   got(url,options)
@@ -41,7 +46,7 @@ app.get("/users",function(req,res){
 });
 
 app.get("/statuses",function(req,res){
-  const options = {username:config.get('credentials.username'),password:config.get('credentials.password')}
+  const options = {username:username,password:password}
   const url = baseUrl+'status';
   
   got(url,options)
@@ -70,8 +75,8 @@ app.get("/issues/:project?",function(req,res){
   });
 
   const options = {
-    username:config.get('credentials.username'),
-    password:config.get('credentials.password'),
+    username:username,
+    password:password,
     headers:{
       'Content-Type': 'application/json'
     },
@@ -88,25 +93,13 @@ app.get("/issues/:project?",function(req,res){
 });
 
 app.listen(config.get('app.port'), function () {
-  if(!verifyConfig) {
-    throw("No config file in config folder! Check code comments for instructions.");
+  if(username==="" || password==="") {
+    throw("Username and password required as environment variables!");
     process.exit(1);
-    /*
-    Create folder "config" in root folder and add a "default.yaml" file."
-    In default.yaml, add:
-
-    app:
-      port: 3001
-    credentials:
-      username: Ask Thibaut for username
-      password: ask Thibauet for password
-    */
   }
 
-  console.log(`Example app listening on port ${config.get('app.port')}!`);
+  console.log(`Example app listening on port ${port}!`);
 });
 
-function verifyConfig(){
-  return config !== undefined;
-}
+
 
