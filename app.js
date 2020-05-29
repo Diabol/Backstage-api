@@ -12,7 +12,8 @@ const port = 3001;
 app.use(cors());
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.send("Hello World!");
+
 });
 
 app.get("/projects",function(req,res){
