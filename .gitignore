@@ -1,5 +1,6 @@
 # Config files
 config/*.*
+keycloak.json
 
 # Logs
 logs
