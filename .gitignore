@@ -1,6 +1,7 @@
 # Config files
 config/*.*
 keycloak.json
+docker-compose.yml
 
 # Logs
 logs
