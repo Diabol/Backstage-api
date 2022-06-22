@@ -21,7 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "got": "^11.0.1",
+    "got": "^11.8.5",
     "js-yaml": "^3.13.1",
     "keycloak-connect": "^10.0.2"
   }
